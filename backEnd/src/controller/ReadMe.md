@@ -1,0 +1,2 @@
+和routes中的导航共同构成Controller控制层
+将routes中的导航函数抽取出来
