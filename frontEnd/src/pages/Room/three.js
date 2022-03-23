@@ -1,22 +1,22 @@
 // Room index.js中的three.js相关拆分到这个文件夹中
-import * as THREE from '../../utils/three/three.js-dev/build/three.module.js';
-import {OrbitControls} from '../../utils/three/three.js-dev/examples/jsm/controls/OrbitControls.js'
-import {CSS2DObject, CSS2DRenderer} from '../../utils/three/three.js-dev/examples/jsm/renderers/CSS2DRenderer.js'
+// import * as THREE from '../../utils/three/three.js-dev/build/three.module.js';
+// import {OrbitControls} from '../../utils/three/three.js-dev/examples/jsm/controls/OrbitControls.js'
+// import {CSS2DObject, CSS2DRenderer} from '../../utils/three/three.js-dev/examples/jsm/renderers/CSS2DRenderer.js'
 
-// import * as THREE from '../../utils/three/three/three.module.js';
-// import {OrbitControls} from '../../utils/three/three/OrbitControls.js'
-// import {CSS2DObject, CSS2DRenderer} from '../../utils/three/three/CSS2DRenderer.js'
+import * as THREE from '../../utils/three/three.module.js';
+import {OrbitControls} from '../../utils/three/OrbitControls.js'
+import {CSS2DObject, CSS2DRenderer} from '../../utils/three/CSS2DRenderer.js'
 
 // import qjImg from '../../assets/101.jpg'
-
+    
 import hotspot from '../../assets/circle-圆圈.png';
-
-/* 
+   
+/*    
   TODO:
     将所有写死的数据通过传入的房间号改成动态的
       已完成全景图，只要将全景图名字改成房间号就可以
 */
-
+ 
 
 // three.js部分
 let scene, camera, renderer, controls, labelRenderer;

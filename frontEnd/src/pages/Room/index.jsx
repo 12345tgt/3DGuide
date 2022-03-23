@@ -9,7 +9,7 @@ import {initThree} from './three'
 import styles from '../../assets/css/room.module.css';
 
 
-
+ 
 export default function Room() {
   const { num } = useParams()
   console.log(num);
