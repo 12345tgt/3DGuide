@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 // 连接mongodb数据库
-mongoose.connect("mongodb://localhost/zdsc", {
+mongoose.connect("mongodb://localhost/3DGuide", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then((res)=> {

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 import Home from '../pages/Home'
 import Building from '../pages/Building'
 import Floor from '../pages/Floor'
+import Room from '../pages/Room'
 
 export default [
   {
@@ -30,5 +31,9 @@ export default [
     //     element: <Floor />
     //   }
     // ]
+  },
+  {
+    path: '/room/:num',
+    element: <Room></Room>
   }
 ]

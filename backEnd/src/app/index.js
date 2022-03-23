@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const koaBody = require('koa-body')
 
-const { userRouter, homeRouter } = require('../router');
+const { roomRouter } = require('../router');
 const errHandler = require('./errHandler');
 
 
@@ -12,8 +12,7 @@ const app = new Koa();
 app
   // koaBody将请求字段写到ctx.request.body中
   .use(koaBody())
-  .use(userRouter.routes())
-  .use(homeRouter.routes())
+  .use(roomRouter.routes())
   //  .use(router.allowedMethods())
 
 // 统一的错误处理

@@ -1,7 +1,5 @@
-const userRouter = require('./user_route')
-const homeRouter = require('./home_route')
+const roomRouter = require('./room_route')
 
 module.exports = {
-  userRouter,
-  homeRouter
+  roomRouter
 }

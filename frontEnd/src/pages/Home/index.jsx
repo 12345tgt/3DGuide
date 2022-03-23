@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import southImg from '../../assets/3d_south.jpg'
-
+import styles from '../../assets/css/home.module.css';
 
 
 function handleClick(e) {
@@ -17,7 +17,9 @@ export default function Home() {
         TODO:
           图片为等比例放大，如何调整
       */}
-      <img src={southImg} alt="南校区3D鸟瞰图" onClick={handleClick} height='100%' />
+      {/* <div className={styles.box}> */}
+        <img src={southImg} className={styles.southImg} alt="南校区3D鸟瞰图" onClick={handleClick} />
+      {/* </div> */}
     </Link>
   )
 }
