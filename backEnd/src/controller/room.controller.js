@@ -8,10 +8,7 @@ class RoomController {
     // console.log("roomNumber",roomNumber,typeof roomNumber);
 
     // 2.操作数据库
-    /* 
-      TODO:
-      使用try catch捕获await错误
-    */
+    // 调用service层前最好都使用try catch捕获await错误
     
     try{
       const res = await queryRoomInfo(roomNumber)
@@ -26,10 +23,12 @@ class RoomController {
         */
         result: res
       }
-    } catch {
+    } catch(err) {
+      console.log(err);
+
       ctx.body = {
         code: 10001,
-        msg: "获取教室信息失败",
+        msg: err || "获取教室信息失败",
         result: ''
       }
     }

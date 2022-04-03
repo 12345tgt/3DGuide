@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import southImg from '../../assets/3d_south.jpg'
+import southImg from '../../assets/photo/3d_south.jpg'
 import styles from '../../assets/css/home.module.css';
 
 

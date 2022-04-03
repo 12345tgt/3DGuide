@@ -4,6 +4,8 @@ import Home from '../pages/Home'
 import Building from '../pages/Building'
 import Floor from '../pages/Floor'
 import Room from '../pages/Room'
+import Floor3 from '../pages/Floor3'
+
 
 export default [
   {
@@ -35,5 +37,9 @@ export default [
   {
     path: '/room/:num',
     element: <Room></Room>
+  },
+  {
+    path: '/test',
+    element: <Floor3></Floor3>
   }
 ]
