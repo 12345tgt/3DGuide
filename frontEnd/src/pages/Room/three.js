@@ -1,16 +1,23 @@
 // Room index.js中的three.js相关拆分到这个文件夹中
+
+// 本地模块
 // import * as THREE from '../../utils/three/three.js-dev/build/three.module.js';
 // import {OrbitControls} from '../../utils/three/three.js-dev/examples/jsm/controls/OrbitControls.js'
 // import {CSS2DObject, CSS2DRenderer} from '../../utils/three/three.js-dev/examples/jsm/renderers/CSS2DRenderer.js'
 
-import * as THREE from '../../utils/three/three.module.js';
-import {OrbitControls} from '../../utils/three/OrbitControls.js'
-import {CSS2DObject, CSS2DRenderer} from '../../utils/three/CSS2DRenderer.js'
+// import * as THREE from '../../utils/three/build/three.js';
+// import {OrbitControls} from '../../utils/three/OrbitControls.js'
+// import {CSS2DObject, CSS2DRenderer} from '../../utils/three/CSS2DRenderer.js'
+
+// npm模式
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import {CSS2DObject, CSS2DRenderer} from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
 // import qjImg from '../../assets/101.jpg'
     
-import hotspot from '../../assets/circle-圆圈.png';
-   
+import hotspot from '../../assets/photo/circle-圆圈.png';
+import hotPoints from './hotPoints'
 /*    
   TODO:
     将所有写死的数据通过传入的房间号改成动态的
@@ -55,7 +62,7 @@ function initThree(roomNum){
 
   // 全景贴图
   var texture = new THREE.TextureLoader().load(
-    require(`../../assets/${roomNum}.jpg`)
+    require(`../../assets/photo/${roomNum}.jpg`)
     // // onLoad回调
     // ()=> {
     //   // renderer.render(scene, camera);
@@ -91,35 +98,7 @@ function initThree(roomNum){
   // 监听窗口大小变化
   window.addEventListener( 'resize', onWindowResize, false );
 
-  // 添加热点
-  var hotPoints=[
-    // 球体半径
-    // Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2)=1
-      {
-          position:{
-              x:0,
-              y:0,
-              z:-0.92
-          },
-          detail:{
-              "title":"信息点1",
-              'describe': '<span style="display: block;">xxx冰箱</span><a href="http://www.baidu.com">链接</a>',
-          }
-          
-      },
-      {
-          position:{
-              x:-0.2,
-              y:-0.05,
-              // z:0.2
-              z:Math.pow((Math.pow(0.92,2)-Math.pow(-0.2,2)-Math.pow(-0.05,2)),0.5)
-          },
-          detail:{
-              "title":"信息点2",
-              'describe': '<span style="display: block;">xxx彩电</span><a href="http://www.baidu.com">链接</a>',
-          }
-      }
-  ];
+  
   var pointTexture = new THREE.TextureLoader().load(hotspot);
   // sizeAttenuation:精灵的大小是否会被相机深度衰减。（仅限透视摄像头。）默认为true。
   var material = new THREE.SpriteMaterial( { map: pointTexture, color: 0xff2222, sizeAttenuation: false} );

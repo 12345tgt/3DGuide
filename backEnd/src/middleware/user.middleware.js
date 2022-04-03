@@ -7,13 +7,6 @@ const userValidator = async (ctx, next)=> {
     // 存放错误日志
     console.error('用户名或密码为空', ctx.request.body);
     // ctx.status = 400
-    // ctx.body = {
-    //   // code用于定位错误位置
-    //   code: '10001',
-    //   msg: "用户名或密码为空",
-    //   result: ''
-    // }
-
     // 通过app.emit发送错误，从而抽离错误类型
     ctx.app.emit('error', userFormateError, ctx)
     return 
