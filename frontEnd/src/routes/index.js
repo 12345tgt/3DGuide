@@ -35,7 +35,7 @@ export default [
     // ]
   },
   {
-    path: '/room/:num',
+    path: '/room/:roomNum',
     element: <Room></Room>
   },
   {

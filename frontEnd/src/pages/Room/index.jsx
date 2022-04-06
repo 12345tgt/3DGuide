@@ -11,11 +11,11 @@ import styles from '../../assets/css/room.module.css';
 
  
 export default function Room() {
-  const { num } = useParams()
-  console.log(num);
+  const { roomNum } = useParams()
+  // console.log(roomNum);
 
   useEffect(() => {
-    initThree(num)
+    initThree(roomNum)
   
     return () => {
       alert("卸载组件")
