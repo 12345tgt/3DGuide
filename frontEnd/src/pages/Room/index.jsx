@@ -18,7 +18,7 @@ export default function Room() {
     initThree(roomNum)
   
     return () => {
-      alert("卸载组件")
+      
     }
   }, [])
   

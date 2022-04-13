@@ -18,6 +18,8 @@ export default function Floor3() {
   const [errorMessage, setErrorMessage] = useState("")
   // const [roomNum, setRoomNum] = useState()
 
+  let roomNum, mouseDownTime, mouseUpTime
+
   useEffect(() => {
 
     unityContext.on("error", (message)=> {
@@ -33,12 +35,28 @@ export default function Floor3() {
     unityContext.on("roomClicked",(msg)=> {
       // setRoomNum()
       // console.log(jumpParameters(msg));
-      let roomNum = jumpParameters(msg)
-      roomNum == 'G-101' || roomNum == 'G-318' || roomNum == 'G-336' ? window.open(`http://localhost:3000/room/${roomNum}`) : console.log("无全景图");
+      roomNum = jumpParameters(msg)
+      mouseDownTime = new Date().getTime()
+      // console.log(mouseDownTime);
+
+    })
+    //监听鼠标抬起
+    unityContext.on("roomMouseUp",()=> {
+      mouseUpTime = new Date().getTime()
+      // console.log(mouseUpTime);
+      // console.log(mouseUpTime - mouseDownTime);
+
+      // 时间间隔在250以内认定为点击，否则为拖动
+      if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
+        roomNum == 'G-101' || roomNum == 'G-318' || roomNum == 'G-336' ? window.open(`http://localhost:3000/room/${roomNum}`) : console.log("无全景图");
+      }
     })
 
     return () => {
       unityContext.removeEventListener("progress");
+      unityContext.removeEventListener("error");
+      unityContext.removeEventListener("roomClicked");
+      unityContext.removeEventListener("roomMouseUp");
     }
   }, [])
 
