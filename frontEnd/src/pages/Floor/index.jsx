@@ -1,58 +1,91 @@
-import React, { useEffect } from 'react'
+// 使用react-unity-webgl在项目中加载unity
+import React,{useEffect,useState} from 'react'
+import Unity, { UnityContext } from "react-unity-webgl";
 import { useParams } from 'react-router-dom'
-// import Room from '../Room/index'
 
-export default function Floor() {
-  const { id } = useParams()
+import styles from '../../assets/css/floor3.module.css'
+import jumpParameters from '../../utils/jumpParameters'
 
-  function handleJumpRoom (e) {
-    try {
-      console.log("floor",e.data);
-      let data, newPage, contr;
-      typeof e.data == 'string' ? data = e.data.substr(e.data.length-3) : data = '';
+/* 
+  TODO:
+    错误边界
+    捕获unityContext加载unity资源错误
+*/
 
 
-      console.log(data,!isNaN(Number(data)));
-      if(data!=='' && !isNaN(Number(data))) {
-        newPage = window.open(`http://localhost:3000/room/${data}`)
+export default function Floor3() {
+  const [didError, setDidError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
+  // const [roomNum, setRoomNum] = useState()
+  const [isLoaded, setIsLoaded] = useState(false);
+
+
+  const { floorNum } = useParams()
+  
+  let roomNum, mouseDownTime, mouseUpTime
+
+  const loaderUrl = `/Floor${floorNum}/build/Floor${floorNum}.loader.js`
+  const dataUrl = `/Floor${floorNum}/build/Floor${floorNum}.data`
+  const frameworkUrl = `/Floor${floorNum}/build/Floor${floorNum}.framework.js`
+  const codeUrl = `/Floor${floorNum}/build/Floor${floorNum}.wasm`
+
+  const unityContext = new UnityContext({
+    loaderUrl,
+    dataUrl,
+    frameworkUrl,
+    codeUrl
+  });
+
+  useEffect(() => {
+    unityContext.on("error", (message)=> {
+      setDidError(true)
+      setErrorMessage(message)
+    })
+
+    unityContext.on("progress", (progression)=> {
+      console.log(progression);
+    });
+
+    unityContext.on("loaded", function () {
+      setIsLoaded(true);
+    });
+
+    // 监听点击房间
+    unityContext.on("roomClicked",(msg)=> {
+      // setRoomNum()
+      // 格式为'G_101'和'G_101_1'
+      roomNum = jumpParameters(msg)
+      mouseDownTime = new Date().getTime()
+      // console.log(mouseDownTime);
+
+    })
+    //监听鼠标抬起
+    unityContext.on("roomMouseUp",()=> {
+      mouseUpTime = new Date().getTime()
+      // console.log(mouseUpTime);
+      // console.log(mouseUpTime - mouseDownTime);
+
+      // 时间间隔在250以内认定为点击，否则为拖动
+      if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
+        roomNum == 'G-101' || roomNum == 'G-318' || roomNum == 'G-336' ? window.open(`http://localhost:3000/room/${roomNum}`) : console.log("无全景图");
       }
+    })
+    return () => {
+      // unityContext.removeEventListener("progress");
+      // unityContext.removeEventListener("error");
+      // unityContext.removeEventListener("roomClicked");
+      // unityContext.removeEventListener("roomMouseUp");
+      // unityContext.removeEventListener("loaded");
 
-      // switch (data) {
-      //   case '101':
-      //     newPage = window.open('http://localhost:3000/room/101')
-      //     // console.log(newPage);
-      //     // console.log(newPage.document.body);
-      //     // contr = document.createElement('div')
-      //     // newPage.document.body.appendChild(contr)
-
-      //     break;
-      //   case '102':
-      //     // 跳转到一层界面
-
-      //     break;
-      //   case '103':
-      //     // 跳转到一层界面
-
-      //     break;
-      // }
-
-    } catch (err) {
-      console.log(err);
+      // 卸载所有事件监听器
+      unityContext.removeAllEventListeners();
     }
-  }
-
-  // window.addEventListener('message', handleJumpRoom)
-  window.onmessage = handleJumpRoom;
-
-  // useEffect(() => {
+  }, [])
   
-  //   return () => {
-  //     // window.removeEventListener('message', handleJumpRoom)
-  //   }
-  // }, [])
   
-
-  return (
-    id === '01' || id ==='03' ? <iframe src={`http://47.108.179.245:8088/floor${id}`} frameBorder="0" width='1400' height='600'></iframe> : <div>Floor {id} </div>
-  )
+  return didError === true ? (
+    <div>that's an error {errorMessage}</div>
+  ) : (
+    <Unity unityContext={unityContext} className={styles.unity}/>
+  );
 }

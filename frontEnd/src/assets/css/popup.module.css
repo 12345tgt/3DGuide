@@ -1,0 +1,66 @@
+
+.modal :global .ant-modal-title {
+  font-weight: 700;
+}
+
+.background {
+  background-color: rgb(197, 127, 127);
+  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
+.popup {
+  width: 400px;
+  /* height: 200px; */
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 200px;
+}
+
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 25px 0;
+  /* height: 50px; */
+  /* margin: 0 auto; */
+  /* margin: 20px auto; */
+}
+
+.title p {
+  /* margin: 0 auto; */
+  /* width: 100px; */
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  height: 150px;
+
+  /* margin-bottom: 25px; */
+}
+
+.content p {
+  flex: 1 1 100%;
+  text-align: center;
+}
+
+.button {
+
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  /* font-weight: normal;
+  display: block;
+  width: 50px;
+  height: 25px;
+  line-height: 25px; */
+}

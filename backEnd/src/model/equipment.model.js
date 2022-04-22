@@ -2,27 +2,26 @@ const {mongoose} = require('../db/mongoose')
 
 const Schema = mongoose.Schema
 
-// 设备表字段规则
-// "name": "华为MateBook D",
-// "roomNumber": "G-318",
-// "position": {
-//   "x": 0,
-//   "y": 0.5,
-//   "z": 0.5
-// } ,
-// "desc": {
-//   "内存容量": "8GB",
-//   "屏幕尺寸": "14英寸",
-//   "屏幕刷新率": "60Hz",
-//   "类型": "轻薄笔记本",
-//   "处理器": "intel i5",
-//   "颜色": "银色",
-//   "固态硬盘": "512GB",
-//   "系统": "Windows 11",
-//   "显卡型号": "集成显卡"
-// } 
+// {
+  // id使用mongoDB自动创建的_id，以确保唯一性
+//   id: '01',
+//   position:{
+//       x:0,
+//       y:0
+//   },
+//   detail:{
+//       "title":"海尔空调",
+//       // 使用数组方便处理
+//       'describe': [
+//           '名称: 海尔KF-35GW/20MCA75',
+//           '能效等级: 五级能效',
+//           '类型: 壁挂式',
+//           '变频/定频: 定频'
+//       ],
+//   }
+// }
 const equipmentScheme = new Schema({
-  roomNumber: {
+  roomNum: {
     type: String,
     required: true
   },
@@ -30,20 +29,12 @@ const equipmentScheme = new Schema({
     type: String,
     required: true,
   },
-  // 设备热点在全景图中的位置
-  // {
-  //   x: 
-  //   y:
-  //   z:
-  // }
+  // 设备热点在全景图中的位置，只需要x和y值，z值由前端函数计算
   position: {
     x: Number,
-    y: Number,
-    z: Number
+    y: Number
   },
-  desc: {
-    type: Object,
-  }
+  desc: []
 })
 
 const equipmentModel = mongoose.model('equipment', equipmentScheme)

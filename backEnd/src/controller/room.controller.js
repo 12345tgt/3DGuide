@@ -1,6 +1,27 @@
-const { queryRoomInfo } = require('../services/room.service')
+const { queryRoomInfo, dbCreateRoom } = require('../services/room.service')
+const { roomCreationError, roomQueryError } = require('../constant/err.type')
 
 class RoomController {
+  async createRoom(ctx, next) {
+    const { roomNum, name, type, panoUrl} = ctx.request.body
+
+    try {
+      const res = await dbCreateRoom({roomNum, name, type, panoUrl})
+      ctx.body = {
+        code: 0,
+        msg: "创建教室信息成功",
+        result: res
+      }
+    } catch (err) {
+      console.error(err);
+      ctx.app.emit('error', roomCreationError, ctx)
+      return
+    }
+
+    next()
+  }
+
+
   async getRoomInfo(ctx, next) {
     // console.log(ctx.query);
     // 获取查询字符串
@@ -25,14 +46,10 @@ class RoomController {
       }
     } catch(err) {
       console.log(err);
-
-      ctx.body = {
-        code: 10001,
-        msg: err || "获取教室信息失败",
-        result: ''
-      }
+      ctx.app.emit('error', roomQueryError, ctx)
+      return
     }
-    
+    next()
   }
 }
 

@@ -1,13 +1,22 @@
 module.exports = {
-  userFormateError: {
-    // code用于定位错误位置
+  roomCreationError: {
     code: '10001',
-    msg: "用户名或密码为空",
+    msg: "教室创建失败",
     result: ''
   },
-  userExisted: {
+  roomQueryError: {
     code: '10002',
-    msg: "用户已存在",
+    msg: "获取教室信息失败",
+    result: ''
+  },
+  eqptCreationError: {
+    code: '10003',
+    msg: "设备创建失败",
+    result: ''
+  },
+  eqptQueryError: {
+    code: '10004',
+    msg: "获取设备信息失败",
     result: ''
   }
 }

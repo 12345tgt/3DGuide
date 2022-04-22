@@ -4,7 +4,8 @@ import Home from '../pages/Home'
 import Building from '../pages/Building'
 import Floor from '../pages/Floor'
 import Room from '../pages/Room'
-import Floor3 from '../pages/Floor3'
+
+import Test from '../pages/Test'
 
 
 export default [
@@ -17,12 +18,16 @@ export default [
     element: <Home />
   },
   {
-    path: '/building',
+    path: '/building/:buildingName',
     element: <Building />
   },
+  // {
+  //   path: '/building',
+  //   element: <Building />
+  // },
   {
     // 两种写法都可以，第二种适用于有多个子路由时
-    path: '/floor/:id',
+    path: '/floor/:floorNum',
     element: <Floor />
 
     // path: '/floor',
@@ -40,6 +45,6 @@ export default [
   },
   {
     path: '/test',
-    element: <Floor3></Floor3>
+    element: <Test></Test>
   }
 ]

@@ -1,10 +1,11 @@
 const mongoose = require("mongoose")
+const {MDB_HOST, MDB_PORT, MDB_DB, MDB_USER, MDB_PWD} = require("../config/config.default")
 
 // 连接mongodb数据库
-mongoose.connect("mongodb://localhost/3DGuide", {
+mongoose.connect(`mongodb://${MDB_USER}:${MDB_PWD}@${MDB_HOST}:${MDB_PORT}/${MDB_DB}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then((res)=> {
+}).then(()=> {
   console.log("数据库连接成功");
 }).catch((err)=> {
   console.log(err);

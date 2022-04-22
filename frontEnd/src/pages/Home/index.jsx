@@ -11,8 +11,11 @@ function handleClick(e) {
 }
 
 export default function Home() {
+  // console.log(10);
+
   return (
-    <Link to="/building">
+    // 目前只有G楼，暂时写死
+    <Link to="/building/G">
       {/* 
         TODO:
           图片为等比例放大，如何调整
