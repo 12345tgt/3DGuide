@@ -3,18 +3,16 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // import {CSS2DObject, CSS2DRenderer} from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 
-import styles from '../../assets/css/room.module.css';
+import styles from '../../assets/css/page/room.module.css';
 import hotspot from '../../assets/photo/circle-圆圈.png';
 import debounce from '../../utils/debounce'
 
 import isPopup from '../../pages/Room/constant'
 
+import audio from '../../assets/audio/dylanf - 卡农（经典钢琴版）.mp3';
 /*    
   TODO:
-    将所有写死的数据通过传入的房间号改成动态的
-    已完成全景图，只要将全景图名字改成房间号就可以
-    
-    可以改成组件
+    将音频改为接口获取链接
 */
  
 
@@ -74,18 +72,20 @@ export default function Pano(props){
 
     // 全景贴图
     let texture = new THREE.TextureLoader().load(
-      require(`../../assets/photo/${props.roomNum}.jpg`)
+      // require(`../../assets/photo/${props.roomNum}.jpg`)
+      props.panoUrl,
+
       // // onLoad回调
-      // ()=> {
-      //   // renderer.render(scene, camera);
-      //   console.log("贴图完成");
-      // },
-      // // onProgress回调
-      // undefined,
-      // // onError回调
-      // ()=> {
-      //   console.log("贴图加载失败");
-      // }
+      ()=> {
+        // renderer.render(scene, camera);
+        console.log("贴图完成");
+      },
+      // onProgress回调
+      undefined,
+      // onError回调
+      ()=> {
+        console.log("贴图加载失败");
+      }
     );
 
     // 球体材料
@@ -190,16 +190,17 @@ export default function Pano(props){
     });
 
     //辅助函数 获取世界坐标以帮助确定热点位置, 不用时注释
-    // container.addEventListener("click",function(){
-    //   raycaster.setFromCamera( mouse, camera );
-    //   intersects = raycaster.intersectObjects( [sphere] );
-    //   // point —— 相交部分的点（世界坐标）
-    //   var {x,y} = intersects[0].point
-    //   console.log("世界坐标：", {
-    //     x: x.toFixed(2),
-    //     y: y.toFixed(2)
-    //   });
-    // });
+    container.addEventListener("click",function(){
+      raycaster.setFromCamera( mouse, camera );
+      intersects = raycaster.intersectObjects( [sphere] );
+      // point —— 相交部分的点（世界坐标）
+      var {x,y,z} = intersects[0].point
+      console.log("世界坐标：", {
+        x: x.toFixed(2),
+        y: y.toFixed(2),
+        z: z.toFixed(2)
+      });
+    });
 
 
     //镜头控制器,注意此处render用renderer.domElement会出问题
@@ -226,8 +227,11 @@ export default function Pano(props){
   }, [])
   
   return (
-    <>
+    <div className={styles.box}>
       <div id='pano' className={styles.pano} onClick={props.onClick}></div>
-    </>
+      <audio controls className={styles.audio} src={audio}>
+        抱歉，您的浏览器不支持 audio 元素。
+      </audio>
+    </div>
   )
 }

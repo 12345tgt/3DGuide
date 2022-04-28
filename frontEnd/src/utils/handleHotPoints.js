@@ -10,7 +10,6 @@ export default function (data) {
     let hotPoints = []
     data.forEach((item, index)=> {
         if(item.position) {
-            console.log(index);
             hotPoints.push({
                 id: item._id,
                 position: {

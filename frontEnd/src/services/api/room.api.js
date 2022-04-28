@@ -10,6 +10,17 @@ function getRoomInfo(roomNum) {
   })
 }
 
+function getFloorRooms(buildingName, floorNum) {
+  return request({
+    url: '/getFloorRooms',
+    params: {
+      buildingName,
+      floorNum
+    }
+  })
+}
+
 export {
-  getRoomInfo
+  getRoomInfo,
+  getFloorRooms
 }

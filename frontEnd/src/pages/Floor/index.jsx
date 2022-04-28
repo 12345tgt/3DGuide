@@ -1,10 +1,14 @@
 // 使用react-unity-webgl在项目中加载unity
 import React,{useEffect,useState} from 'react'
 import Unity, { UnityContext } from "react-unity-webgl";
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation, useSearchParams } from 'react-router-dom'
 
-import styles from '../../assets/css/floor3.module.css'
+import BF_Sider from '../../components/content/BF_Sider'
+import Help from '../../components/content/Help';
+
+import styles from '../../assets/css/page/floor3.module.css'
 import jumpParameters from '../../utils/jumpParameters'
+import {getRoomInfo, getFloorRooms} from '../../services/api/room.api'
 
 /* 
   TODO:
@@ -18,12 +22,22 @@ export default function Floor3() {
   const [errorMessage, setErrorMessage] = useState("")
   // const [roomNum, setRoomNum] = useState()
   const [isLoaded, setIsLoaded] = useState(false);
+  const [floorRooms, setFloorRooms] = useState([])
 
 
-  const { floorNum } = useParams()
+  // const { floorNum } = useParams()
+  // const {state: {buildingName}} = useLocation()
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const buildingName = searchParams.get('buildingName')
+  const floorNum = searchParams.get('floorNum')  
   
   let roomNum, mouseDownTime, mouseUpTime
 
+  /* 
+    TODO:
+      修改为${buildingName}Floor${floorNum}
+  */
   const loaderUrl = `/Floor${floorNum}/build/Floor${floorNum}.loader.js`
   const dataUrl = `/Floor${floorNum}/build/Floor${floorNum}.data`
   const frameworkUrl = `/Floor${floorNum}/build/Floor${floorNum}.framework.js`
@@ -35,6 +49,15 @@ export default function Floor3() {
     frameworkUrl,
     codeUrl
   });
+
+  useEffect(()=> {
+    // console.log(buildingName);
+    getFloorRooms(buildingName, floorNum).then((res)=> {
+      console.log(res);
+      setFloorRooms(res.result)
+    })
+  },[])
+
 
   useEffect(() => {
     unityContext.on("error", (message)=> {
@@ -67,7 +90,13 @@ export default function Floor3() {
 
       // 时间间隔在250以内认定为点击，否则为拖动
       if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
-        roomNum == 'G-101' || roomNum == 'G-318' || roomNum == 'G-336' ? window.open(`http://localhost:3000/room/${roomNum}`) : console.log("无全景图");
+        // console.log(floorRooms);
+        if(floorRooms.includes(roomNum)){
+          window.open(`http://localhost:3000/room/${roomNum}`)
+        } else {
+          alert(`暂无${roomNum}房间信息`)
+        }
+
       }
     })
     return () => {
@@ -80,12 +109,16 @@ export default function Floor3() {
       // 卸载所有事件监听器
       unityContext.removeAllEventListeners();
     }
-  }, [])
+  }, [floorRooms])
   
   
   return didError === true ? (
     <div>that's an error {errorMessage}</div>
   ) : (
-    <Unity unityContext={unityContext} className={styles.unity}/>
+    <>
+      <Unity unityContext={unityContext} className={styles.unity}/>
+      <BF_Sider title='可选房间' options={floorRooms}></BF_Sider>
+      <Help></Help>
+    </>
   );
 }

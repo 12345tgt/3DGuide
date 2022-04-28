@@ -1,18 +1,6 @@
-export default function() {
-  let count = 0
+// let buildingName = "G"
+// let floorNum = "3"
+// let reg = new RegExp("^"+buildingName+"-"+floorNum)
 
-  // document.addEventListener('click', ()=> {
-  //   console.log('点击');
-  //   count++
-  // })
-
-  /* 
-    只会执行一次，原因未知
-  */
-  setTimeout(()=> {
-    console.log('count加');
-    count++
-  })
-
-  return count
-}
+//   console.log(reg.test("G-101"));
+//   console.log(reg.test("G-314"));

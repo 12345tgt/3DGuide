@@ -1,0 +1,19 @@
+.box {
+  position: relative;
+}
+
+/* 全景图居中 */
+.pano {
+  /* 60vw是 100*3/5 因为visibleAreaWidth = window.innerWidth * 3/5;  100vw是视口宽度*/
+  width: 60vw;
+  margin: 0 auto;
+}
+
+.audio {
+  position: absolute;
+  right: 20vw;
+  bottom: 5px;
+  opacity: 0.6;
+  width: 250px;
+  z-index: 10000;
+}

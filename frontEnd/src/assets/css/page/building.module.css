@@ -1,0 +1,24 @@
+.iframe {
+  /* 会出现纵向滚动条，原因不明 */
+  /* width: 100vw;
+  height: 100vh; */
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(197, 197, 197);
+}
+
+.unity {
+  /* 全屏 */
+  /* margin-left: 50px; */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

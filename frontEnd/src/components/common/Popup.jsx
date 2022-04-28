@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button, Modal } from 'antd'
 
 // import styles from '../../assets/css/popup.module.css'
-import '../../assets/css/popup.css'
+import '../../assets/css/component/popup.css'
 import constant from '../../pages/Room/constant'
 
 /* 

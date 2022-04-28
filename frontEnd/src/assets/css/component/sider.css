@@ -1,0 +1,15 @@
+.BF_Box .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-vertical-left, .ant-menu-root.ant-menu-vertical-right, .ant-menu-root.ant-menu-inline {
+  margin-top: 1px;
+  background-color: aqua;
+  position: absolute;
+  
+}
+
+.BF_Box .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+  border-right: 1px solid transparent;
+}
+
+/* .ant-menu-vertical .ant-menu-submenu, .ant-menu-vertical-left .ant-menu-submenu, .ant-menu-vertical-right .ant-menu-submenu, .ant-menu-inline .ant-menu-submenu {
+  
+  border-radius: 40%;
+} */

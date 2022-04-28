@@ -1,0 +1,25 @@
+.footer {
+  background-color: rgb(114, 8, 8);
+  height: 49px;
+  color: #fff;
+  border: 1px solid transparent;
+
+  text-align: right;
+  line-height: 49px;
+  padding-right: 10px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
+
+.placeholder {
+  height: 49px;
+}
+
+.copyright {
+
+}
+

@@ -27,8 +27,8 @@ export default [
   // },
   {
     // 两种写法都可以，第二种适用于有多个子路由时
-    path: '/floor/:floorNum',
-    element: <Floor />
+    // path: '/floor/:floorNum',
+    // element: <Floor />
 
     // path: '/floor',
     // element: <Floor />,
@@ -38,6 +38,11 @@ export default [
     //     element: <Floor />
     //   }
     // ]
+
+
+    // search传参  floor/?buildingName=G&floorNum=3
+    path: '/floor',
+    element: <Floor />
   },
   {
     path: '/room/:roomNum',

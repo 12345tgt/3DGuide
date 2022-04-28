@@ -1,0 +1,22 @@
+/* .test .roomMenu .ant-menu-sub.ant-menu-inline > .ant-menu-item, .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+  float: left;
+  width: 80px;
+  display: block;
+}
+
+.test .roomMenu .ant-menu-sub.ant-menu-inline {
+    width: 300px;
+}
+
+.test .roomMenu .ant-menu-vertical .ant-menu-submenu, .ant-menu-vertical-left .ant-menu-submenu, .ant-menu-vertical-right .ant-menu-submenu, .ant-menu-inline .ant-menu-submenu {
+  width: 300px;
+}
+
+.test .roomMenu .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-vertical-left, .ant-menu-root.ant-menu-vertical-right, .ant-menu-root.ant-menu-inline {
+  width: 300px;
+}
+
+.test .roomMenu .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
+  width: 300px;
+  background-color: red;
+} */

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import southImg from '../../assets/photo/3d_south.jpg'
-import styles from '../../assets/css/home.module.css';
+import styles from '../../assets/css/page/home.module.css';
 
 
 function handleClick(e) {
@@ -15,14 +15,10 @@ export default function Home() {
 
   return (
     // 目前只有G楼，暂时写死
-    <Link to="/building/G">
-      {/* 
-        TODO:
-          图片为等比例放大，如何调整
-      */}
-      {/* <div className={styles.box}> */}
-        <img src={southImg} className={styles.southImg} alt="南校区3D鸟瞰图" onClick={handleClick} />
-      {/* </div> */}
-    </Link>
+      <div className={styles.box}>
+        <Link to="/building/G">
+          <img src={southImg} className={styles.southImg} alt="南校区3D鸟瞰图" onClick={handleClick} />
+        </Link>
+      </div>
   )
 }

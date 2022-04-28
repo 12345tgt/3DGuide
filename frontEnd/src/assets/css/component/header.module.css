@@ -1,0 +1,29 @@
+.header{
+  /* width: 1000px; */
+  height: 66px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid transparent;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
+
+.logo {
+  margin-left: 25px;
+  margin-top: 3px;
+}
+
+.describe {
+  position: absolute;
+  top: 35px;
+  left: 280px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.placeholder {
+  height: 66px;
+}
