@@ -16,15 +16,17 @@ class EquipmentService {
   // 查询设备信息
   async dbGetEquipmentInfo(roomNum) {
     // 查询
-    // console.log(roomNumber);
+    // console.log(roomNum);
 
     const res = await Equipment.find({
       roomNum
     })
 
-    if(res.length == 0) {
-      throw("无该教室设备信息");
-    }
+    // 无信息就返回空数组，不用报错
+    // if(res.length == 0) {
+    //   throw("无该教室设备信息");
+    // }
+
     return res
   }
 }

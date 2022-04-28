@@ -9,13 +9,18 @@ module.exports = {
     msg: "获取教室信息失败",
     result: ''
   },
-  eqptCreationError: {
+  floorRoomQueryError: {
     code: '10003',
+    msg: "获取楼层中教室失败",
+    result: ''
+  },
+  eqptCreationError: {
+    code: '10004',
     msg: "设备创建失败",
     result: ''
   },
   eqptQueryError: {
-    code: '10004',
+    code: '10005',
     msg: "获取设备信息失败",
     result: ''
   }

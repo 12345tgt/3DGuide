@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const {getRoomInfo, createRoom} = require("../controller/room.controller")
+const {getRoomInfo, createRoom, getFloorRooms, updateRoomInfo} = require("../controller/room.controller")
 
 // const { userValidator } = require("../middleware/user.middleware")
 
@@ -9,5 +9,9 @@ const router = new Router();
 router.post('/createRoom', createRoom)
 
 router.get('/getRoomInfo', getRoomInfo)
+
+router.get('/getFloorRooms',getFloorRooms)
+
+router.post('/updateRoomInfo', updateRoomInfo)
 
 module.exports = router

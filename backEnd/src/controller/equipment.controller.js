@@ -28,7 +28,7 @@ class EquipmentController {
     // console.log(ctx.query);
     // 获取查询字符串
     const {roomNum} = ctx.query
-    // console.log("roomNumber",roomNumber,typeof roomNumber);
+    // console.log("roomNum",roomNum,typeof roomNum);
 
     // 2.操作数据库
     // 调用service层前最好都使用try catch捕获await错误
