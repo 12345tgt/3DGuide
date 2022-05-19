@@ -21,10 +21,6 @@ export default [
     path: '/building/:buildingName',
     element: <Building />
   },
-  // {
-  //   path: '/building',
-  //   element: <Building />
-  // },
   {
     // 两种写法都可以，第二种适用于有多个子路由时
     // path: '/floor/:floorNum',
@@ -45,6 +41,7 @@ export default [
     element: <Floor />
   },
   {
+    // param传参
     path: '/room/:roomNum',
     element: <Room></Room>
   },

@@ -4,6 +4,8 @@ import {useNavigate} from 'react-router-dom'
 import { Menu } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 
+import {HOST, WEB_PORT} from '../../config'
+
 import '../../assets/css/component/sider.css'
 
 function getItem(label, key, icon, children, type) {
@@ -54,7 +56,7 @@ export default function BF_Sider(props) {
     if(key[1]=='f') {
       navigate(key)
     } else {
-      window.open(`http://localhost:3000/room/${key}`)
+      window.open(`${HOST}:${WEB_PORT}/room/${key}`)  
     }
   }
   

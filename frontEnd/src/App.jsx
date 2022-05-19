@@ -15,6 +15,8 @@ import Footer from './components/content/Footer';
 function App() {
   const element = useRoutes(routes)
 
+  // console.log(process.env.NODE_ENV);
+
   return (
     <div className="App">
       <Header></Header>

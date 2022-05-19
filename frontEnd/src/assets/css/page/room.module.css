@@ -17,3 +17,9 @@
   width: 250px;
   z-index: 10000;
 }
+
+.tip {
+  color: white;
+  font-size: 23px;
+  letter-spacing: 3px;
+}

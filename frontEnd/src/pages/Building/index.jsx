@@ -4,6 +4,7 @@ import Unity, { UnityContext } from "react-unity-webgl";
 
 import BF_Sider from '../../components/content/BF_Sider'
 import Help from '../../components/content/Help';
+import Loading from '../../components/common/Loading'
 
 import styles from '../../assets/css/page/building.module.css'
 
@@ -13,16 +14,37 @@ export default function Building() {
   // const [roomNum, setRoomNum] = useState()
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [quality, setQuality] = useState('extreme')
+  const [quality, setQuality] = useState('1080')
+  
+
+  const [progress, setProgress] = useState(0)
 
   const { buildingName } = useParams()
   const navigate = useNavigate()
   
+// 根目录/是frontEnd
+  // const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+  // const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
+  // const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
+  // const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
 
-  const loaderUrl = `/Building${buildingName}_${quality}/build/Building${buildingName}_${quality}.loader.js`
-  const dataUrl = `/Building${buildingName}_${quality}/build/Building${buildingName}_${quality}.data`
-  const frameworkUrl = `/Building${buildingName}_${quality}/build/Building${buildingName}_${quality}.framework.js`
-  const codeUrl = `/Building${buildingName}_${quality}/build/Building${buildingName}_${quality}.wasm`
+  // const loaderUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+  // const dataUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
+  // const frameworkUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
+  // const codeUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
+
+  // extreme gzip压缩
+  // const loaderUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.loader.js`
+  // const dataUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.data.gz`
+  // const frameworkUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.framework.js.gz`
+  // const codeUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.wasm.gz`
+
+  const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+  const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
+  const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
+  const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
+
+
 
   let mouseDownTime, mouseUpTime, clickedFloor
 
@@ -41,14 +63,17 @@ export default function Building() {
 
     unityContext.on("progress", (progression)=> {
       console.log(progression);
+      
+      setProgress(progression);
     });
 
     unityContext.on("loaded", function () {
       setIsLoaded(true);
+      console.log('加载完成');
     });
 
     // 监听点击楼层
-    unityContext.on("floorClicked",(msg)=> {
+    unityContext.on("floorMouseDown",(msg)=> {
       // 格式为'G_101'和'G_101_1'
       console.log(msg);
       clickedFloor = msg
@@ -78,7 +103,7 @@ export default function Building() {
       // 卸载所有事件监听器
       unityContext.removeAllEventListeners();
     }
-  })
+  }, [])
 
   function handleJumpFloor (clickedFloor) {
     let floorNum
@@ -113,12 +138,6 @@ export default function Building() {
           break;
       }
       navigate(`/floor?buildingName=${buildingName}&floorNum=${floorNum}`)
-      // navigate(floorUrl, {
-      //   state: {
-      //     buildingName
-      //   }
-      // })
-
     } catch (err) {
       console.log(err);
     }
@@ -129,6 +148,7 @@ export default function Building() {
     <div>that's an error {errorMessage}</div>
   ) : (
     <>
+      <Loading isLoaded={isLoaded} progress={progress} ></Loading>
       <Unity unityContext={unityContext} className={styles.unity}/>
       <BF_Sider title='可选楼层' options={['F1','F2','F3','F4','F5','F6']} buildingName={buildingName}></BF_Sider>
       <Help></Help>

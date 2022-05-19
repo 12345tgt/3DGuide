@@ -5,10 +5,12 @@ import { useParams, useLocation, useSearchParams } from 'react-router-dom'
 
 import BF_Sider from '../../components/content/BF_Sider'
 import Help from '../../components/content/Help';
+import Loading from '../../components/common/Loading'
 
 import styles from '../../assets/css/page/floor3.module.css'
 import jumpParameters from '../../utils/jumpParameters'
 import {getRoomInfo, getFloorRooms} from '../../services/api/room.api'
+import {HOST, WEB_PORT} from '../../config';
 
 /* 
   TODO:
@@ -23,6 +25,7 @@ export default function Floor3() {
   // const [roomNum, setRoomNum] = useState()
   const [isLoaded, setIsLoaded] = useState(false);
   const [floorRooms, setFloorRooms] = useState([])
+  const [progress, setProgress] = useState(0)
 
 
   // const { floorNum } = useParams()
@@ -38,10 +41,16 @@ export default function Floor3() {
     TODO:
       修改为${buildingName}Floor${floorNum}
   */
-  const loaderUrl = `/Floor${floorNum}/build/Floor${floorNum}.loader.js`
-  const dataUrl = `/Floor${floorNum}/build/Floor${floorNum}.data`
-  const frameworkUrl = `/Floor${floorNum}/build/Floor${floorNum}.framework.js`
-  const codeUrl = `/Floor${floorNum}/build/Floor${floorNum}.wasm`
+  // const loaderUrl = `/Floor${floorNum}/Build/Floor${floorNum}.loader.js`
+  // const dataUrl = `/Floor${floorNum}/Build/Floor${floorNum}.data`
+  // const frameworkUrl = `/Floor${floorNum}/Build/Floor${floorNum}.framework.js`
+  // const codeUrl = `/Floor${floorNum}/Build/Floor${floorNum}.wasm`
+
+  // gzip压缩
+  const loaderUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.loader.js`
+  const dataUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.data.gz`
+  const frameworkUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.framework.js.gz`
+  const codeUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.wasm.gz`
 
   const unityContext = new UnityContext({
     loaderUrl,
@@ -67,14 +76,16 @@ export default function Floor3() {
 
     unityContext.on("progress", (progression)=> {
       console.log(progression);
+      setProgress(progression);
     });
 
     unityContext.on("loaded", function () {
       setIsLoaded(true);
+      console.log('加载完成');
     });
 
     // 监听点击房间
-    unityContext.on("roomClicked",(msg)=> {
+    unityContext.on("roomMouseDown",(msg)=> {
       // setRoomNum()
       // 格式为'G_101'和'G_101_1'
       roomNum = jumpParameters(msg)
@@ -92,7 +103,7 @@ export default function Floor3() {
       if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
         // console.log(floorRooms);
         if(floorRooms.includes(roomNum)){
-          window.open(`http://localhost:3000/room/${roomNum}`)
+          window.open(`${HOST}:${WEB_PORT}/room/${roomNum}`)    
         } else {
           alert(`暂无${roomNum}房间信息`)
         }
@@ -109,13 +120,14 @@ export default function Floor3() {
       // 卸载所有事件监听器
       unityContext.removeAllEventListeners();
     }
-  }, [floorRooms])
+  }, [])
   
   
   return didError === true ? (
     <div>that's an error {errorMessage}</div>
   ) : (
     <>
+      <Loading progress={progress} isLoaded={isLoaded}></Loading>
       <Unity unityContext={unityContext} className={styles.unity}/>
       <BF_Sider title='可选房间' options={floorRooms}></BF_Sider>
       <Help></Help>

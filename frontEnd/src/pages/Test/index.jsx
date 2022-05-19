@@ -5,6 +5,8 @@ import Sider from '../../components/common/Sider'
 import BF_Sider from '../../components/content/BF_Sider'
 import Card from '../../components/content/Card'
 import R_Sider from '../../components/content/R_Sider'
+import Reserve from '../../components/common/Reserve'
+import Loading from '../../components/common/Loading'
 
 import Help from '../../components/content/Help';
 
@@ -92,8 +94,29 @@ export default function Test() {
 
   // const buildingName = 'G'
 
-  const floorOption=['F1','F2','F3','F4','F5','F6']
+  // const floorOption=['F1','F2','F3','F4','F5','F6']
   // const 
+  const [progress, setProgress] = useState(0)
+  let id
+  useEffect(() => {
+    id = setInterval(() => {
+      setProgress(progress=> progress+=0.02)
+      // console.log(id);
+    }, 1000);
+
+  }, [])
+
+  useEffect(() => {
+    // console.log(progress);
+    if(progress>=1) {
+      setProgress(1)
+      clearInterval(id)
+    }
+
+  }, [progress])
+
+  
+  
   return (
     <div>
       {/* <Sider ></Sider> */}
@@ -101,8 +124,11 @@ export default function Test() {
       {/* <BF_S ider title='可选房间' options={['G-314','G-347','G-324','G-318']}></BF_S> */}
       {/* {equipment!==null && <Card roomName={roomName} roomType={roomType} equipment={equipment}></Card>} */}
 
-      <R_Sider ></R_Sider>
+      {/* <R_Sider ></R_Sider> */}
       {/* <Help></Help> */}
+
+      <Reserve></Reserve>
+      <Loading progress={progress}></Loading>
 
     </div>
   )
