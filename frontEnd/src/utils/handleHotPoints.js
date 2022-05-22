@@ -1,21 +1,36 @@
 
 // 计算z值，有问题，只能得到正值
 function locationCal(x, y) {
-    return Math.pow((Math.pow(0.92, 2) - Math.pow(x, 2) - Math.pow(y, 2)), 0.5)
+    if(x>0.98) {
+        x = 0.98
+        y = 0
+    } 
+    else if(y>0.98) {
+        y = 0.98
+        x = 0
+    }
+    return Math.pow((Math.pow(0.98, 2) - Math.pow(x, 2) - Math.pow(y, 2)), 0.5)
 }
 
 // 添加热点，设计通过后端api返回数据
 // 将接口获取来的数据进行处理转化为接口
 export default function (data) {
     let hotPoints = []
+    let tempZ
     data.forEach((item, index)=> {
         if(item.position) {
+            if(item.position.z>0) {
+                tempZ = locationCal(item.position.x, item.position.y)
+            } else {
+                tempZ = -locationCal(item.position.x, item.position.y)
+            }
+
             hotPoints.push({
                 id: item._id,
                 position: {
                     x: item.position.x,
                     y: item.position.y,
-                    z: -locationCal(item.position.x, item.position.y)   //临时
+                    z: tempZ
                 },
                 detail: {
                     title: item.name,

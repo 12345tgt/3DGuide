@@ -6,7 +6,7 @@ class RoomService {
     console.log("房间创建成功");
 
     if(res == null) {
-      throw("创建失败")
+      throw("创建房间失败")
     }
     return res
   }

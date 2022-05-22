@@ -17,7 +17,7 @@ import audio from '../../assets/audio/dylanf - 卡农（经典钢琴版）.mp3';
  
 
 // three.js部分
-let scene, camera, renderer, controls;
+let scene, camera, renderer, controls, fov=90, near = 10, far = 100;
 // 约900px
 let visibleAreaWidth = window.innerWidth * 3/5;
 // 约500px
@@ -60,7 +60,7 @@ export default function Pano(props){
       scene = new THREE.Scene();
 
       //镜头
-      camera = new THREE.PerspectiveCamera(90, visibleAreaWidth / visibleAreaHeight, 0.1, 100);
+      camera = new THREE.PerspectiveCamera(fov, visibleAreaWidth / visibleAreaHeight, 0.1, 100);
       
       camera.position.set(0, 0, 0.01);
       
@@ -204,6 +204,36 @@ export default function Pano(props){
         });
       });
 
+      //鼠标滑轮-鼠标上下滑轮实现放大缩小效果
+      container.addEventListener('mousewheel', mousewheel, false);
+      function mousewheel(e) {
+        e.preventDefault();
+        //e.stopPropagation();
+        if (e.wheelDelta) { //判断浏览器IE，谷歌滑轮事件
+          if (e.wheelDelta > 0) { //当滑轮向上滚动时
+            fov -= (near < fov ? 1 : 0);
+          }
+          if (e.wheelDelta < 0) { //当滑轮向下滚动时
+            fov += (fov < far ? 1 : 0);
+          }
+        } 
+        else if (e.detail) { //Firefox滑轮事件
+          if (e.detail > 0) { //当滑轮向上滚动时
+            fov -= 1;
+          }
+          if (e.detail < 0) { //当滑轮向下滚动时
+            fov += 1;
+          }
+        }
+        // console.info('camera.fov:'+camera.fov);
+        // console.info('camera.x:'+camera.position.x);
+        // console.info('camera.y:'+camera.position.y);
+        // console.info('camera.z:'+camera.position.z);
+        //改变fov值，并更新场景的渲染
+        camera.fov = fov;
+        camera.updateProjectionMatrix();
+        // renderer.render(scene, camera);
+      }
 
       //镜头控制器,注意此处render用renderer.domElement会出问题
       // controls = new OrbitControls(camera,labelRenderer.domElement);
@@ -211,6 +241,9 @@ export default function Pano(props){
 
       // 禁止缩放
       controls.enableZoom = false;
+      // controls.zoomSpeed = 5;
+      // controls.minZoom = 0.5;
+      // controls.maxZoom = 2;
 
       // 禁止相机平移，阻止右键拖动
       controls.enablePan = false;

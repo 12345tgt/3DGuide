@@ -23,5 +23,15 @@ module.exports = {
     code: '10005',
     msg: "获取设备信息失败",
     result: ''
+  },
+  reserveCreationError: {
+    code: '10006',
+    msg: "创建预约信息失败",
+    result: ''
+  },
+  reserveQueryError: {
+    code: '10007',
+    msg: "获取预约信息失败",
+    result: ''
   }
 }

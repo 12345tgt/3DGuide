@@ -32,7 +32,8 @@ const equipmentScheme = new Schema({
   // 设备热点在全景图中的位置，只需要x和y值，z值由前端函数计算
   position: {
     x: Number,
-    y: Number
+    y: Number,
+    z: Number
   },
   desc: []
 })

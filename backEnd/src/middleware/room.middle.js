@@ -2,7 +2,7 @@ const {} = require("../constant/err.type")
 
 const roomValidator = async (ctx, next)=> {
   // 合法性
-  if(!user_name || !password) {
+  if('') {
     // 存放错误日志
     console.error();
 
