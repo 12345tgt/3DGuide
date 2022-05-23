@@ -59,7 +59,7 @@ export default function Pano(props){
       //场景
       scene = new THREE.Scene();
 
-      //镜头
+      //透视摄像机，fov — 摄像机视锥体垂直视野角度，从视图的底部到顶部，以角度来表示
       camera = new THREE.PerspectiveCamera(fov, visibleAreaWidth / visibleAreaHeight, 0.1, 100);
       
       camera.position.set(0, 0, 0.01);
@@ -110,36 +110,34 @@ export default function Pano(props){
       // 监听窗口大小变化
       window.addEventListener( 'resize', onWindowResize, false );
 
-      
+      // 热点贴图
       let pointTexture = new THREE.TextureLoader().load(hotspot);
       // sizeAttenuation:精灵的大小是否会被相机深度衰减。（仅限透视摄像头。）默认为true。
       let material = new THREE.SpriteMaterial( { map: pointTexture, color: 0xff0000, sizeAttenuation: false} );
-      let pointObjects = [];
 
-      // let describe;
+      // 热点数组
+      let pointObjects = [];
       props.hotPoints.forEach((item, index)=> {
         console.log(item);
         let sprite = new THREE.Sprite( material );
+        // 贴图大小
         sprite.scale.set( 0.06, 0.06, 0.06 );
+        // 贴图位置
         sprite.position.set( item.position.x, item.position.y, item.position.z );
-
+        // 标识id，用于弹窗识别
         sprite.hotPointId = item.id
 
         pointObjects.push(sprite);
         scene.add( sprite );
       })
       // console.log(pointObjects);
-      
-      // labelRenderer = new CSS2DRenderer();
-      // labelRenderer.setSize( visibleAreaWidth, visibleAreaHeight );
-      // 外部引入样式
-      // labelRenderer.domElement.className = styles.label
-      // container.appendChild( labelRenderer.domElement );
 
       let raycaster = new THREE.Raycaster();
       let mouse = new THREE.Vector2();
+      // 相交的热点
       let intersects = []
 
+      // 防抖,不确定是否有用
       let dbhoverPoint = debounce(hoverPoint, 100)
       let dbleavePoint = debounce(leavePoint, 100)
 
@@ -147,18 +145,16 @@ export default function Pano(props){
       container.addEventListener("mousemove",function(event){
         // event.preventDefault();
         
-        // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 to +1)
-        // mouse.x = (<鼠标相对于可视区域的横坐标> / <可视区域的宽>) * 2 - 1;
-        // mouse.y = -(<鼠标相对于可视区域的纵坐标> / <可视区域的高>) * 2 + 1;
+        // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 ~ +1)
+        // 原理是WebGL坐标系和屏幕坐标系不一样,y轴取负是因为他俩Y轴方向相反
         mouse.x = ( (event.clientX - renderer.domElement.getBoundingClientRect().left) / visibleAreaWidth ) * 2 - 1;
         mouse.y = - ( (event.clientY - renderer.domElement.getBoundingClientRect().top) / visibleAreaHeight ) * 2 + 1;
 
-        // 通过摄像机和鼠标位置更新射线
+        // 从摄像机位置向鼠标点击位置发射射线
         raycaster.setFromCamera( mouse, camera );
         // 计算物体和射线的焦点
         intersects = raycaster.intersectObjects( pointObjects );
         
-        // 悬浮出现弹窗有bug，timer没有成功清除
         if(intersects.length>0){
           dbhoverPoint()
 
@@ -168,23 +164,23 @@ export default function Pano(props){
       });
       function hoverPoint() {
         document.body.style.cursor = "pointer"
-
       }
 
       function leavePoint() {
         document.body.style.cursor = "default"
-
       }
 
       // 监听点击
-      container.addEventListener("click",function(event){
+      container.addEventListener("click",function(){
         // 监听鼠标点击，停止自动旋转
         controls.autoRotate = false;
 
         if(intersects.length>0){
             console.log(intersects[0].object);
             // console.log(isPopup.flag);
+            // 传出id
             isPopup.setHotPointId(intersects[0].object.hotPointId)
+            // 弹出弹窗
             isPopup.setPopup()
         } else {
           isPopup.setHotPointId('')
@@ -194,6 +190,7 @@ export default function Pano(props){
       //辅助函数 获取世界坐标以帮助确定热点位置, 不用时注释
       container.addEventListener("click",function(){
         raycaster.setFromCamera( mouse, camera );
+        // 与全景图球体的交点
         intersects = raycaster.intersectObjects( [sphere] );
         // point —— 相交部分的点（世界坐标）
         var {x,y,z} = intersects[0].point
@@ -209,6 +206,7 @@ export default function Pano(props){
       function mousewheel(e) {
         e.preventDefault();
         //e.stopPropagation();
+        // 放大时减小fov，缩小时增大fov
         if (e.wheelDelta) { //判断浏览器IE，谷歌滑轮事件
           if (e.wheelDelta > 0) { //当滑轮向上滚动时
             fov -= (near < fov ? 1 : 0);
@@ -219,10 +217,10 @@ export default function Pano(props){
         } 
         else if (e.detail) { //Firefox滑轮事件
           if (e.detail > 0) { //当滑轮向上滚动时
-            fov -= 1;
+            fov -= (near < fov ? 1 : 0);;
           }
           if (e.detail < 0) { //当滑轮向下滚动时
-            fov += 1;
+            fov += (fov < far ? 1 : 0);
           }
         }
         // console.info('camera.fov:'+camera.fov);
@@ -269,14 +267,6 @@ export default function Pano(props){
       // 提示信息水平垂直居中
       container.style.paddingTop = '25vh'
       container.style.paddingLeft = '21vw'
-
-      // const tip = document.createElement('p');
-      // tip.innerHTML = '抱歉该房间尚未拍摄全景图';
-      // tip.style.color = 'white';
-      // tip.style.fontSize = '23px';
-      // tip.style.letterSpacing = '3px';
-      // container.appendChild(tip);
-
     }
     
   }, [])

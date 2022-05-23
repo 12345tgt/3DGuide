@@ -18,6 +18,7 @@ import {HOST, WEB_PORT} from '../../config';
     捕获unityContext加载unity资源错误
 */
 
+let rooms = []
 
 export default function Floor3() {
   const [didError, setDidError] = useState(false);
@@ -41,16 +42,16 @@ export default function Floor3() {
     TODO:
       修改为${buildingName}Floor${floorNum}
   */
-  // const loaderUrl = `/Floor${floorNum}/Build/Floor${floorNum}.loader.js`
-  // const dataUrl = `/Floor${floorNum}/Build/Floor${floorNum}.data`
-  // const frameworkUrl = `/Floor${floorNum}/Build/Floor${floorNum}.framework.js`
-  // const codeUrl = `/Floor${floorNum}/Build/Floor${floorNum}.wasm`
+  const loaderUrl = `/Floor${floorNum}/Build/Floor${floorNum}.loader.js`
+  const dataUrl = `/Floor${floorNum}/Build/Floor${floorNum}.data`
+  const frameworkUrl = `/Floor${floorNum}/Build/Floor${floorNum}.framework.js`
+  const codeUrl = `/Floor${floorNum}/Build/Floor${floorNum}.wasm`
 
   // gzip压缩
-  const loaderUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.loader.js`
-  const dataUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.data.gz`
-  const frameworkUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.framework.js.gz`
-  const codeUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.wasm.gz`
+  // const loaderUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.loader.js`
+  // const dataUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.data.gz`
+  // const frameworkUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.framework.js.gz`
+  // const codeUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.wasm.gz`
 
   const unityContext = new UnityContext({
     loaderUrl,
@@ -64,6 +65,7 @@ export default function Floor3() {
     getFloorRooms(buildingName, floorNum).then((res)=> {
       console.log(res);
       setFloorRooms(res.result)
+      rooms = res.result
     })
   },[])
 
@@ -101,8 +103,10 @@ export default function Floor3() {
 
       // 时间间隔在250以内认定为点击，否则为拖动
       if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
+        // floorRooms始终是空值
         // console.log(floorRooms);
-        if(floorRooms.includes(roomNum)){
+        console.log(rooms);
+        if(rooms.includes(roomNum)){
           window.open(`${HOST}:${WEB_PORT}/room/${roomNum}`)    
         } else {
           alert(`暂无${roomNum}房间信息`)
@@ -121,6 +125,31 @@ export default function Floor3() {
       unityContext.removeAllEventListeners();
     }
   }, [])
+
+  // useEffect(() => {
+  //   console.log(floorRooms);
+  //   //监听鼠标抬起
+  //   unityContext.on("roomMouseUp",()=> {
+  //     mouseUpTime = new Date().getTime()
+  //     // console.log(mouseUpTime);
+  //     // console.log(mouseUpTime - mouseDownTime);
+
+  //     // 时间间隔在250以内认定为点击，否则为拖动
+  //     if(mouseDownTime && mouseUpTime - mouseDownTime <= 250) {
+  //       console.log(floorRooms);
+  //       if(floorRooms.includes(roomNum)){
+  //         window.open(`${HOST}:${WEB_PORT}/room/${roomNum}`)    
+  //       } else {
+  //         alert(`暂无${roomNum}房间信息`)
+  //       }
+
+  //     }
+  //   })
+  //   return () => {
+  //     unityContext.removeEventListener("roomMouseUp");
+  //   }
+  // }, [floorRooms])
+  
   
   
   return didError === true ? (
