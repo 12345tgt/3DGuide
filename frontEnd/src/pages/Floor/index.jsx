@@ -42,16 +42,16 @@ export default function Floor3() {
     TODO:
       修改为${buildingName}Floor${floorNum}
   */
-  const loaderUrl = `/Floor${floorNum}/Build/Floor${floorNum}.loader.js`
-  const dataUrl = `/Floor${floorNum}/Build/Floor${floorNum}.data`
-  const frameworkUrl = `/Floor${floorNum}/Build/Floor${floorNum}.framework.js`
-  const codeUrl = `/Floor${floorNum}/Build/Floor${floorNum}.wasm`
+  // const loaderUrl = `/Floor${floorNum}/Build/Floor${floorNum}.loader.js`
+  // const dataUrl = `/Floor${floorNum}/Build/Floor${floorNum}.data`
+  // const frameworkUrl = `/Floor${floorNum}/Build/Floor${floorNum}.framework.js`
+  // const codeUrl = `/Floor${floorNum}/Build/Floor${floorNum}.wasm`
 
   // gzip压缩
-  // const loaderUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.loader.js`
-  // const dataUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.data.gz`
-  // const frameworkUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.framework.js.gz`
-  // const codeUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.wasm.gz`
+  const loaderUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.loader.js`
+  const dataUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.data.gz`
+  const frameworkUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.framework.js.gz`
+  const codeUrl = `../Floor${floorNum}_gzip/Build/Floor${floorNum}_gzip.wasm.gz`
 
   const unityContext = new UnityContext({
     loaderUrl,
