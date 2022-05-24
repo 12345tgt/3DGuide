@@ -39,11 +39,28 @@ export default function Building() {
   // const frameworkUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.framework.js.gz`
   // const codeUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.wasm.gz`
 
-  const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
-  const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
-  const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
-  const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
-
+  // const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+  // const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
+  // const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
+  // const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
+  let loaderUrl,dataUrl,frameworkUrl,codeUrl
+  if(process.env.NODE_ENV == 'development') {
+    loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+    dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
+    frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
+    codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
+  }
+  else if(process.env.NODE_ENV == 'production') {
+    loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+    dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
+    frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
+    codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
+  } else {
+    loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
+    dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
+    frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
+    codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
+  }
 
 
   let mouseDownTime, mouseUpTime, clickedFloor
