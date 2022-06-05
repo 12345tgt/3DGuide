@@ -45,10 +45,10 @@ export default function Building() {
   // const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
   let loaderUrl,dataUrl,frameworkUrl,codeUrl
   if(process.env.NODE_ENV == 'development') {
-    loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
-    dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
-    frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
-    codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
+    loaderUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.loader.js`
+    dataUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.data`
+    frameworkUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.framework.js`
+    codeUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.wasm`
   }
   else if(process.env.NODE_ENV == 'production') {
     loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
