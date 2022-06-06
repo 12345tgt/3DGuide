@@ -22,35 +22,17 @@ export default function Building() {
   const { buildingName } = useParams()
   const navigate = useNavigate()
   
-// 根目录/是frontEnd
-  // const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
-  // const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
-  // const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
-  // const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
-
-  // const loaderUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
-  // const dataUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data`
-  // const frameworkUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js`
-  // const codeUrl = `../Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm`
-
-  // extreme gzip压缩
-  // const loaderUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.loader.js`
-  // const dataUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.data.gz`
-  // const frameworkUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.framework.js.gz`
-  // const codeUrl = `../Building${buildingName}_gzip/Build/Building${buildingName}_gzip.wasm.gz`
-
-  // const loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
-  // const dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
-  // const frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
-  // const codeUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.wasm.gz`
+  // 根目录/是frontEnd
   let loaderUrl,dataUrl,frameworkUrl,codeUrl
   if(process.env.NODE_ENV == 'development') {
+    // BuildingG_extreme是最高画质未压缩版
     loaderUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.loader.js`
     dataUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.data`
     frameworkUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.framework.js`
     codeUrl = `/Building${buildingName}_extreme/Build/Building${buildingName}_extreme.wasm`
   }
   else if(process.env.NODE_ENV == 'production') {
+    // BuildingG_1080是材质1080画质压缩版
     loaderUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.loader.js`
     dataUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.data.gz`
     frameworkUrl = `/Building${buildingName}_${quality}/Build/Building${buildingName}_${quality}.framework.js.gz`
